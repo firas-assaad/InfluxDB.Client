@@ -43,12 +43,12 @@ namespace Vibrant.InfluxDB.Client.Tests
 
             if ( includeNulls )
             {
-               var info = new ComputerInfo { Timestamp = timestamp, RAM = ram, Region = region };
+               var info = new ComputerInfo { Timestamp = timestamp.ToPrecision(TimestampPrecision.Nanosecond), RAM = ram, Region = region };
                infos[ i ] = info;
             }
             else
             {
-               var info = new ComputerInfo { Timestamp = timestamp, CPU = cpu, RAM = ram, Host = host, Region = region };
+               var info = new ComputerInfo { Timestamp = timestamp.ToPrecision(TimestampPrecision.Nanosecond), CPU = cpu, RAM = ram, Host = host, Region = region };
                infos[ i ] = info;
             }
 
@@ -69,7 +69,7 @@ namespace Vibrant.InfluxDB.Client.Tests
             var value = rng.NextDouble();
             var type = TestEnums[ rng.Next( TestEnums.Length ) ];
 
-            var info = new EnumeratedRow { Timestamp = timestamp, Value = value,  Type = type };
+            var info = new EnumeratedRow { Timestamp = timestamp.ToPrecision(TimestampPrecision.Nanosecond), Value = value,  Type = type };
             infos[ i ] = info;
 
             timestamp = timestamp.AddSeconds( 1 );
@@ -96,7 +96,7 @@ namespace Vibrant.InfluxDB.Client.Tests
             info.Fields.Add( "ram", ram );
             info.Tags.Add( "host", host );
             info.Tags.Add( "region", region );
-            info.Timestamp = timestamp;
+            info.Timestamp = timestamp.ToPrecision(TimestampPrecision.Nanosecond);
 
             infos[ i ] = info;
 

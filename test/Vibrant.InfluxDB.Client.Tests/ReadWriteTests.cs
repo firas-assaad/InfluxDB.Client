@@ -55,7 +55,7 @@ namespace Vibrant.InfluxDB.Client.Tests
       {
          var row = new VariationRow
          {
-            Timestamp = new DateTime( 2013, 1, 1, 1, 1, 1, DateTimeKind.Utc ),
+            Timestamp = new DateTime( 2013, 1, 1, 1, 1, 1, DateTimeKind.Utc ).ToPrecision(TimestampPrecision.Nanosecond),
             Count = 1337,
             Indicator = true,
             Message = "Hello there\nWhat's up?",

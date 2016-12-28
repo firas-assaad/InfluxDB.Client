@@ -9,7 +9,7 @@ namespace Vibrant.InfluxDB.Client.Tests
    public class VariationRow
    {
       [InfluxTimestamp]
-      public DateTime Timestamp { get; set; }
+      public long Timestamp { get; set; }
 
       [InfluxTag( "type odd name" )]
       public string Type { get; set; }

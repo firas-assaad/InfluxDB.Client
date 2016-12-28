@@ -9,7 +9,7 @@ namespace Vibrant.InfluxDB.Client.Tests
    internal class SimpleRow
    {
       [InfluxTimestamp]
-      internal DateTime? Timestamp { get; set; }
+      internal long? Timestamp { get; set; }
 
       [InfluxField( "value" )]
       internal double Value { get; set; }

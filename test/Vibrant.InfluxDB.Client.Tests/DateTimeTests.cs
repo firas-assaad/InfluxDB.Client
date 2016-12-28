@@ -25,7 +25,7 @@ namespace Vibrant.InfluxDB.Client.Tests
 
          var row = new DateTimeRow
          {
-            Timestamp = time,
+            Timestamp = time.ToPrecision(TimestampPrecision.Nanosecond),
             OtherTime = time,
             OtherTimeAsString = time.ToIso8601()
          };
@@ -52,7 +52,7 @@ namespace Vibrant.InfluxDB.Client.Tests
          var time = new DateTime( 2013, 1, 1, 0, 0, 0, DateTimeKind.Utc );
 
          var row = new DynamicInfluxRow();
-         row.Timestamp = time;
+         row.Timestamp = time.ToPrecision(TimestampPrecision.Nanosecond);
          row.Fields.Add( "otherTime", time );
          row.Fields.Add( "otherTimeAsString", time.ToIso8601() );
 

@@ -250,7 +250,7 @@ namespace Vibrant.InfluxDB.Client.Parsers
                         }
                         else if ( columnName == InfluxConstants.TimeColumn )
                         {
-                           setters[ i ] = ( row, timeName, value ) => row.SetTimestamp( DateTime.Parse( (string)value, CultureInfo.InvariantCulture, DateTimeStyles ) );
+                           setters[ i ] = ( row, timeName, value ) => row.SetTimestamp(long.Parse(value.ToString()));
                         }
                         else if ( meta.Tags.Contains( columnName ) )
                         {

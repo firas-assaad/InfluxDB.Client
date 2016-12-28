@@ -25,7 +25,7 @@ namespace Vibrant.InfluxDB.Client.Rows
       /// Gets the timestamp.
       /// </summary>
       /// <returns></returns>
-      public DateTime? GetTimestamp()
+      public long? GetTimestamp()
       {
          return Timestamp;
       }
@@ -34,7 +34,7 @@ namespace Vibrant.InfluxDB.Client.Rows
       /// Sets the timestamp.
       /// </summary>
       /// <param name="value"></param>
-      public void SetTimestamp( DateTime? value )
+      public void SetTimestamp(long? value )
       {
          Timestamp = value;
       }
@@ -100,7 +100,7 @@ namespace Vibrant.InfluxDB.Client.Rows
       /// <summary>
       /// Gets or sets the timestamp.
       /// </summary>
-      public DateTime? Timestamp { get; set; }
+      public long? Timestamp { get; set; }
 
       /// <summary>
       /// Gets a dictionary of all the Tags.

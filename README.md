@@ -1,5 +1,5 @@
 # InfluxDB Client for .NET
-<!-- [![Build status](https://ci.appveyor.com/api/projects/status/0rkna8pevwiv9acy/branch/master?svg=true)](https://ci.appveyor.com/project/MikaelGRA/influxdb-client/branch/master) -->
+Modified to use long (Int64) timestamp instead of DateTime, preserving nanosecond resolution.
 
 This library makes it easy to be a client for InfluxDB on .NET!
 
@@ -33,7 +33,7 @@ Start by defining a class that represents a row in InfluxDB that you want to sto
 public class ComputerInfo
 {
    [InfluxTimestamp]
-   public DateTime Timestamp { get; set; }
+   public long Timestamp { get; set; }
 
    [InfluxTag( "host" )]
    public string Host { get; set; }
@@ -50,7 +50,7 @@ public class ComputerInfo
 ```
 
 On your POCO class you must specify these things:
- * 1 property with the type DateTime or DateTime? as the timestamp used in InfluxDB by adding the [InfluxTimestamp] attribute.
+ * 1 property with the type long or long? as the timestamp used in InfluxDB by adding the [InfluxTimestamp] attribute.
  * 0-* properties with the type string or a user-defined enum (nullables too) with the [InfluxTag] attribute that InfluxDB will use as indexed tags.
  * 1-* properties with the type string, long, double, bool, DateTime or a user-defined enum (nullables too) with the [InfluxField] attribute that InfluxDB will use as fields.
 
@@ -74,7 +74,8 @@ private ComputerInfo[] CreateTypedRowsStartingAt( DateTime start, int rows )
       string region = regions[ rng.Next( regions.Length ) ];
       string host = hosts[ rng.Next( hosts.Length ) ];
 
-      var info = new ComputerInfo { Timestamp = timestamp, CPU = cpu, RAM = ram, Host = host, Region = region };
+      var ts = timestamp.ToPrecision(TimestampPrecision.Nanosecond);
+      var info = new ComputerInfo { Timestamp = ts, CPU = cpu, RAM = ram, Host = host, Region = region };
       infos[ i ] = info;
 
       timestamp = timestamp.AddSeconds( 1 );
@@ -86,7 +87,8 @@ private ComputerInfo[] CreateTypedRowsStartingAt( DateTime start, int rows )
 public async Task Should_Write_Typed_Rows_To_Database()
 {
    var client = new InfluxClient( new Uri( "http://localhost:8086" ) );
-   var infos = CreateTypedRowsStartingAt( new DateTime( 2010, 1, 1, 1, 1, 1, DateTimeKind.Utc ), 500 );
+   var ts = new DateTime( 2010, 1, 1, 1, 1, 1, DateTimeKind.Utc ).ToPrecision(TimestampPrecision.Nanosecond);
+   var infos = CreateTypedRowsStartingAt( ts, 500 );
    await _client.WriteAsync( "mydb", "myMeasurementName", infos );
 }
 ```
@@ -143,7 +145,7 @@ private DynamicInfluxRow[] CreateDynamicRowsStartingAt( DateTime start, int rows
       info.Fields.Add( "ram", ram );
       info.Tags.Add( "host", host );
       info.Tags.Add( "region", region );
-      info.Timestamp = timestamp;
+      info.Timestamp = timestamp.ToPrecision(TimestampPrecision.Nanosecond);
 
       infos[ i ] = info;
 
@@ -155,7 +157,8 @@ private DynamicInfluxRow[] CreateDynamicRowsStartingAt( DateTime start, int rows
 public async Task Should_Write_Dynamic_Rows_To_Database()
 {
    var client = new InfluxClient( new Uri( "http://localhost:8086" ) );
-   var infos = CreateDynamicRowsStartingAt( new DateTime( 2010, 1, 1, 1, 1, 1, DateTimeKind.Utc ), 500 );
+   var ts = new DateTime( 2010, 1, 1, 1, 1, 1, DateTimeKind.Utc ).ToPrecision(TimestampPrecision.Nanosecond);
+   var infos = CreateDynamicRowsStartingAt( ts, 500 );
    await _client.WriteAsync( "mydb", "myMeasurementName", infos );
 }
 ```

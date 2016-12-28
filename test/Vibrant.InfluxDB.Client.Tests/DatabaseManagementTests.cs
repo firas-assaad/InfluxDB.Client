@@ -57,7 +57,7 @@ namespace Vibrant.InfluxDB.Client.Tests
             RAM = 1024,
             Host = "some-host",
             Region = "some-region",
-            Timestamp = DateTime.UtcNow - TimeSpan.FromMinutes( 5 ),
+            Timestamp = (DateTime.UtcNow - TimeSpan.FromMinutes( 5 )).ToPrecision(TimestampPrecision.Nanosecond),
          };
 
          await _client.WriteAsync( InfluxClientFixture.DatabaseName, "dmt1", new[] { state } );
@@ -90,7 +90,7 @@ namespace Vibrant.InfluxDB.Client.Tests
             RAM = 1024,
             Host = "some-host",
             Region = "some-region",
-            Timestamp = DateTime.UtcNow - TimeSpan.FromMinutes( 5 ),
+            Timestamp = (DateTime.UtcNow - TimeSpan.FromMinutes( 5 )).ToPrecision(TimestampPrecision.Nanosecond),
          };
 
          await _client.WriteAsync( InfluxClientFixture.DatabaseName, "dmt2", new[] { state } );
@@ -121,7 +121,7 @@ namespace Vibrant.InfluxDB.Client.Tests
          {
             CPU = 0.42,
             RAM = 1024,
-            Timestamp = DateTime.UtcNow - TimeSpan.FromMinutes( 5 ),
+            Timestamp = (DateTime.UtcNow - TimeSpan.FromMinutes( 5 )).ToPrecision(TimestampPrecision.Nanosecond),
          };
 
          await _client.WriteAsync( InfluxClientFixture.DatabaseName, "dmt3", new[] { state } );

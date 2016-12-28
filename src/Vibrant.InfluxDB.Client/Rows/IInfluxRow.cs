@@ -17,13 +17,13 @@ namespace Vibrant.InfluxDB.Client.Rows
       /// Sets the timestamp.
       /// </summary>
       /// <param name="value"></param>
-      void SetTimestamp( DateTime? value );
+      void SetTimestamp(long? value );
 
       /// <summary>
       /// Gets the timestamp.
       /// </summary>
       /// <returns></returns>
-      DateTime? GetTimestamp();
+      long? GetTimestamp();
 
       /// <summary>
       /// Sets a field.

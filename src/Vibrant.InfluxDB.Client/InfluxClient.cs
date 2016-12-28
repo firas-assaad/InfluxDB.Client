@@ -852,24 +852,22 @@ namespace Vibrant.InfluxDB.Client
 
       private string CreateQueryUrl( string commandOrQuery, string db, InfluxQueryOptions options )
       {
-         if( options.ChunkSize.HasValue )
-         {
-            return $"query?db={Uri.EscapeDataString( db )}&q={Uri.EscapeDataString( commandOrQuery )}&precision={options.Precision.GetQueryParameter()}&chunk_size={options.ChunkSize.Value}";
-         }
-         else
-         {
-            return $"query?db={Uri.EscapeDataString( db )}&q={Uri.EscapeDataString( commandOrQuery )}&precision={options.Precision.GetQueryParameter()}";
-         }
+         var epochPart = options.Epoch.HasValue ? $"&epoch={options.Precision.GetQueryParameter()}" : "";
+         var chunkPart = options.ChunkSize.HasValue ? $"&chunk_size={options.ChunkSize.Value}" : "";
+         var precisionPart = $"&precision={options.Precision.GetQueryParameter()}";
+         var queryPart = $"q={Uri.EscapeDataString(commandOrQuery)}";
+         var dbPart = string.IsNullOrEmpty(db) ? "" : $"db={Uri.EscapeDataString(db)}&";
+         return "query?" + dbPart + queryPart + precisionPart + chunkPart + epochPart;
       }
 
       private string CreateQueryUrl( string commandOrQuery, string db )
       {
-         return $"query?db={Uri.EscapeDataString( db )}&q={Uri.EscapeDataString( commandOrQuery )}";
+         return CreateQueryUrl(commandOrQuery, db, DefaultQueryOptions);
       }
 
       private string CreateQueryUrl( string commandOrQuery )
       {
-         return $"query?q={Uri.EscapeDataString( commandOrQuery )}";
+         return CreateQueryUrl(commandOrQuery, null);
       }
 
       private string CreatePingUrl( int? secondsToWaitForLeader )

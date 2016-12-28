@@ -9,7 +9,7 @@ namespace Vibrant.InfluxDB.Client.Tests
    public class ComputerInfo
    {
       [InfluxTimestamp]
-      internal DateTime Timestamp { get; set; }
+      internal long Timestamp { get; set; }
 
       [InfluxTag( "host" )]
       internal string Host { get; set; }

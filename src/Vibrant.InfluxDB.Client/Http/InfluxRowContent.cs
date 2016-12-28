@@ -110,7 +110,7 @@ namespace Vibrant.InfluxDB.Client.Http
                if ( ts != null )
                {
                   writer.Write( ' ' );
-                  long ticks = ts.Value.ToPrecision( precision );
+                  long ticks = ts.Value;
                   writer.Write( ticks );
                }
 
@@ -203,7 +203,7 @@ namespace Vibrant.InfluxDB.Client.Http
                   if ( ts != null )
                   {
                      writer.Write( ' ' );
-                     long ticks = ( (DateTime)ts ).ToPrecision( precision );
+                     long ticks = (long)ts;
                      writer.Write( ticks );
                   }
                }

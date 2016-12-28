@@ -9,7 +9,7 @@ namespace Vibrant.InfluxDB.Client.Tests
    public class EnumeratedRow
    {
       [InfluxTimestamp]
-      public DateTime Timestamp { get; set; }
+      public long Timestamp { get; set; }
 
       [InfluxField( "value" )]
       public double Value { get; set; }
